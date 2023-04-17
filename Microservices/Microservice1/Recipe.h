@@ -20,6 +20,7 @@ public:
     Recipe(string name, vector<string> ingredients, int servings,
         float prep_time, float cook_time, float total_time, string url);
     
+    string getName() const;
     vector<string> getIngredients() const;
     int getServings() const;
     float getPrepTime() const;
