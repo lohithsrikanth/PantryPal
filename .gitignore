@@ -1,0 +1,4 @@
+.vscode
+Microservices/Microservice1/test*
+Microservices/gumbo-test
+Microservices/scraper
