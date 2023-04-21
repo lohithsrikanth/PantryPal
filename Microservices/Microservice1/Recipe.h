@@ -12,6 +12,7 @@ private:
     string name;
     vector<string> ingredients;
     int servings;
+    int cookTime;
     string url;
 
 public:
@@ -22,6 +23,7 @@ public:
     string getName() const;
     vector<string> getIngredients() const;
     int getServings() const;
+    int getCookTime() const;
     string getUrl() const;
     
     void setId(int id);
@@ -29,6 +31,7 @@ public:
     void setIngredients(vector<string> ingredients);
     void addIngredient(string ingredient);
     void setServings(int servings);
+    void setCookTime(int cookTime);
     void setURL(string url);
 };
 

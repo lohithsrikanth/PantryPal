@@ -22,6 +22,10 @@ int Recipe::getServings() const {
     return servings;
 }
 
+int Recipe::getCookTime() const {
+    return cookTime;
+}
+
 string Recipe::getUrl() const {
     return url;
 }
@@ -48,6 +52,12 @@ void Recipe::setServings(int servings) {
     if (servings <= 0) 
         throw invalid_argument("Please enter a positive number of servings");
     this->servings = servings;
+}
+
+void Recipe::setCookTime(int cookTime) {
+    if (cookTime <= 0) 
+        throw invalid_argument("Please enter a positive value of cook time");
+    this->cookTime = cookTime;
 }
 
 void Recipe::setURL(string url) {
