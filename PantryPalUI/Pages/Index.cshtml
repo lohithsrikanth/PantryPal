@@ -1,0 +1,33 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+@* <div class="text-center">
+    <h1 class="display-4">PantryPal</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">builfjfWWGWGWSSSWSP.NET Core</a>.</p>
+</div> *@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>PantryPal</title>
+    <link rel="stylesheet" type="text/css" href="~/css/site.css" />
+  </head>
+  <body>
+    <header>
+      <h1>PantryPal</h1>
+      <p>Find recipes based on what's in your pantry!</p>
+    </header>
+    <main>
+      <form id="pantry-form">
+        <label for="pantry-items">Enter your pantry items:</label>
+        <input type="tzext" id="pantry-items" name="pantry-items" required>
+        <button type="submit">Generate Recipes</button>
+      </form>
+      <div id="recipes"></div>
+    </main>
+    <script src="script.js"></script>
+  </body>
+</html>
