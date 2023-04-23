@@ -16,9 +16,6 @@ private:
     string url;
 
 public:
-    Recipe() = default;
-    Recipe(int id, string name, vector<string> ingredients, int servings, string url);
-    
     int getId() const;
     string getName() const;
     vector<string> getIngredients() const;

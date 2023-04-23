@@ -1,11 +1,6 @@
 #include "Recipe.h"
 #include <stdexcept>
 
-Recipe::Recipe() {}
-
-Recipe::Recipe(int id, string name, vector<string> ingredients, int servings, string url) :
-        id(id), name(name), ingredients(ingredients), servings(servings), url(url) {}
-
 vector<string> Recipe::getIngredients() const {
     return ingredients;
 }
