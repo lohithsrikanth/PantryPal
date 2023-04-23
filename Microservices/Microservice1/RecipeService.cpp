@@ -29,6 +29,11 @@ json RecipeService::makeRequest(string& url) {
     curl_easy_setopt(curl_, CURLOPT_URL, url.c_str());
     curl_slist* headers = nullptr;
     
+<<<<<<< HEAD
+=======
+    headers = curl_slist_append(headers, "X-RapidAPI-Key: 7ba169ddc1msh262f271b67b1d7cp1c6d27jsn5557275e88f3");
+    headers = curl_slist_append(headers, "X-RapidAPI-Host: spoonacular-recipe-food-nutrition-v1.p.rapidapi.com");
+>>>>>>> 865ed6ffcdc595c21565f88fa9189d50ca86550c
     curl_easy_setopt(curl_, CURLOPT_HTTPHEADER, headers);
     curl_easy_setopt(curl_, CURLOPT_WRITEFUNCTION, write_callback);
     curl_easy_setopt(curl_, CURLOPT_WRITEDATA, &response);
