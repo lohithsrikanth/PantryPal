@@ -2,30 +2,35 @@
 #include <string>
 #include "json.hpp"
 #include <stdexcept>
+#include <fstream>
+#include <iostream>
 
 using json = nlohmann::json;
+using namespace std;
 
-RecipeService::RecipeService() {
-    curl_global_init(CURL_GLOBAL_ALL);
-    curl_ = curl_easy_init();
-    if (!curl_) {
-        throw runtime_error("Failed to initialize libcurl");
-    }
+size_t RecipeService::write_callback(char* ptr, size_t size, size_t nmemb, string* userdata) {
+    userdata->append(ptr, size * nmemb);
+    return size * nmemb;
 }
 
-RecipeService::~RecipeService() {
-    curl_easy_cleanup(curl_);
-    curl_global_cleanup();
+json RecipeService::readFile(string fileName) {
+    ifstream file(fileName);
+
+    json jsonData;
+    file >> jsonData;
+    return jsonData;
 }
 
 json RecipeService::makeRequest(string& url) {
     string response;
+    CURL *curl_ = curl_easy_init();
+
+    curl_easy_setopt(curl_, CURLOPT_CUSTOMREQUEST, "GET");
     curl_easy_setopt(curl_, CURLOPT_URL, url.c_str());
     curl_slist* headers = nullptr;
     
-    headers = curl_slist_append(headers, "X-RapidAPI-Key: YOUR_API_KEY");
-    headers = curl_slist_append(headers, "X-RapidAPI-Host: spoonacular-recipe-food-nutrition-v1.p.rapidapi.com");
     curl_easy_setopt(curl_, CURLOPT_HTTPHEADER, headers);
+    curl_easy_setopt(curl_, CURLOPT_WRITEFUNCTION, write_callback);
     curl_easy_setopt(curl_, CURLOPT_WRITEDATA, &response);
     
     CURLcode res = curl_easy_perform(curl_);
@@ -34,11 +39,14 @@ json RecipeService::makeRequest(string& url) {
         throw runtime_error(curl_easy_strerror(res));
     }
 
+    curl_easy_cleanup(curl_);
+    curl_slist_free_all(headers);
+
     json responseJson = json::parse(response);
     return responseJson;
 }
 
-vector<Recipe> RecipeService::findRecipesByIngredients(const vector<string> ingredients, int number=5, bool ignorePantry=false, int ranking=0) {
+vector<Recipe> RecipeService::findRecipesByIngredients(const vector<string>& ingredients, int number, bool ignorePantry, int ranking) {
     string url = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/findByIngredients?ingredients=";
     for (int i = 0; i < ingredients.size(); i++) {
         url += ingredients[i];
@@ -48,20 +56,40 @@ vector<Recipe> RecipeService::findRecipesByIngredients(const vector<string> ingr
     }
     url += "&number=" + std::to_string(number) + "&ignorePantry=" + (ignorePantry ? "true" : "false") + "&ranking=" + std::to_string(ranking);
     json responseJson = makeRequest(url);
-    std::vector<Recipe> recipes;
+    // json responseJson = readFile("output.json");
+    vector<Recipe> recipes;
+    int count = 0;
     for (const auto& recipeJson : responseJson) {
-        Recipe recipe;
-        recipe.setName(recipeJson["title"]);
-        // recipe.setURL(recipeJson["sourceUrl"]);
-        // recipe.setServings(recipeJson["servings"]);
-        for (const auto& ingredientJson : recipeJson["usedIngredients"]) {
-            recipe.addIngredient(ingredientJson["name"]);
+        // only include recipes that have the missedIngredientCount as 0
+
+        if (recipeJson["missedIngredientCount"] == 0) {
+            Recipe recipe;
+            recipe.setId(recipeJson["id"]);
+            recipe.setName(recipeJson["title"]);
+            getRecipeInformation(recipe);
+            recipes.push_back(recipe);
+            ++count;
         }
-        recipes.push_back(recipe);
+        // Recipe recipe;
+        // recipe.setId(recipeJson["id"]);
+        // recipe.setName(recipeJson["title"]);
+        // getRecipeInformation(recipe);
+        // recipes.push_back(recipe);
+        // count++;
+        
     }
     return recipes;
 }
 
 void RecipeService::getRecipeInformation(Recipe& recipe) {
-    string url = "https://spoonacular-recipe-food-nutrition";
+    string url = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/" + to_string(recipe.getId()) + "/information";
+    json responseJson = makeRequest(url);
+    //json responseJson = readFile("recipe_info.json");
+    recipe.setName(responseJson["title"]);
+    recipe.setServings(responseJson["servings"]);
+    recipe.setCookTime(responseJson["readyInMinutes"]);
+    recipe.setURL(responseJson["sourceUrl"]);
+    for (const auto& ingredientJson : responseJson["extendedIngredients"]) {
+        recipe.addIngredient(ingredientJson["name"]);
+    }
 }
