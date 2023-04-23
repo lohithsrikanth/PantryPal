@@ -18,8 +18,7 @@ public:
 
 private:
     void getRecipeInformation(Recipe& recipe);
-    json readFile(string fileName);
-    
+    json readFile(string fileName);    
 };   
 
 #endif
