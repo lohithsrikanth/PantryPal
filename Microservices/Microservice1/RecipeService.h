@@ -5,22 +5,20 @@
 #include <string>
 #include "Recipe.h"
 #include "json.hpp"
+#include "../Common/Request.h"
 
 using namespace std;
 
 using json = nlohmann::json;
 
-class RecipeService {
+class RecipeService : private Request {
 public:
     vector<Recipe> findRecipesByIngredients(const vector<string>& ingredients, int number=100, 
                                         bool ignorePantry=true, int ranking=1);
 
 private:
-    CURL* curl_;
-    static size_t write_callback(char* ptr, size_t size, size_t nmemb, string* userdata);
-    json makeRequest(string& url);
     void getRecipeInformation(Recipe& recipe);
-    json readFile(string fileName);
+    json readFile(string fileName);    
 };   
 
 #endif

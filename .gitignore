@@ -1,4 +1,6 @@
 .vscode
+
+Microservices/Common/Request.cpp
 Microservices/Microservice1/test*
 Microservices/Microservice1/*.json
 Microservices/gumbo-test

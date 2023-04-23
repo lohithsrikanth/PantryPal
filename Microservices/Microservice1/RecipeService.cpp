@@ -8,42 +8,12 @@
 using json = nlohmann::json;
 using namespace std;
 
-size_t RecipeService::write_callback(char* ptr, size_t size, size_t nmemb, string* userdata) {
-    userdata->append(ptr, size * nmemb);
-    return size * nmemb;
-}
-
 json RecipeService::readFile(string fileName) {
     ifstream file(fileName);
 
     json jsonData;
     file >> jsonData;
     return jsonData;
-}
-
-json RecipeService::makeRequest(string& url) {
-    string response;
-    CURL *curl_ = curl_easy_init();
-
-    curl_easy_setopt(curl_, CURLOPT_CUSTOMREQUEST, "GET");
-    curl_easy_setopt(curl_, CURLOPT_URL, url.c_str());
-    curl_slist* headers = nullptr;
-    
-    curl_easy_setopt(curl_, CURLOPT_HTTPHEADER, headers);
-    curl_easy_setopt(curl_, CURLOPT_WRITEFUNCTION, write_callback);
-    curl_easy_setopt(curl_, CURLOPT_WRITEDATA, &response);
-    
-    CURLcode res = curl_easy_perform(curl_);
-    
-    if (res != CURLE_OK) {
-        throw runtime_error(curl_easy_strerror(res));
-    }
-
-    curl_easy_cleanup(curl_);
-    curl_slist_free_all(headers);
-
-    json responseJson = json::parse(response);
-    return responseJson;
 }
 
 vector<Recipe> RecipeService::findRecipesByIngredients(const vector<string>& ingredients, int number, bool ignorePantry, int ranking) {
@@ -61,7 +31,6 @@ vector<Recipe> RecipeService::findRecipesByIngredients(const vector<string>& ing
     int count = 0;
     for (const auto& recipeJson : responseJson) {
         // only include recipes that have the missedIngredientCount as 0
-
         if (recipeJson["missedIngredientCount"] == 0) {
             Recipe recipe;
             recipe.setId(recipeJson["id"]);
@@ -70,14 +39,8 @@ vector<Recipe> RecipeService::findRecipesByIngredients(const vector<string>& ing
             recipes.push_back(recipe);
             ++count;
         }
-        // Recipe recipe;
-        // recipe.setId(recipeJson["id"]);
-        // recipe.setName(recipeJson["title"]);
-        // getRecipeInformation(recipe);
-        // recipes.push_back(recipe);
-        // count++;
-        
     }
+
     return recipes;
 }
 
