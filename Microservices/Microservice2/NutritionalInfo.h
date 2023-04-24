@@ -13,7 +13,7 @@ using json = nlohmann::json;
 
 using namespace std;
 
-class NutritionalInfo : public Request {
+class NutritionalInfo : private Request {
 public:
     void addNutrient(Nutrients* nutrient);
 
