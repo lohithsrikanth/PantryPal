@@ -1,16 +1,11 @@
 #include "Carbohydrates.h"
 
-Carbohydrates::Carbohydrates(double value) : value(value) {}
+Carbohydrates::Carbohydrates(double amountInGrams) : amountInGrams(amountInGrams) {}
 
 double Carbohydrates::getAmount() const {
-    return value;
+    return amountInGrams;
 }
 
-// map<string, double> Carbohydrates::calculateNutritionalValue() {
-//     double caloriesInCarbs = value * 4;
-//     return {{"CarbsInGrams", value}, {"CaloriesInCarbs", caloriesInCarbs}};
-// }
-
 double Carbohydrates::calculateCalories() {
-    return value * 4;
+    return amountInGrams * 4;
 }

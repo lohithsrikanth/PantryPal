@@ -8,13 +8,12 @@ using namespace std;
 
 class Fats : public Nutrients {
 public:
-    explicit Fats(double value);
+    explicit Fats(double amountInGrams);
     double getAmount() const override;
-    // map<string, double> calculateNutritionalValue() override;
     double calculateCalories() override;
 
 private:
-    double value;
+    double amountInGrams;
 };
 
 #endif

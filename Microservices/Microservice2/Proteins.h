@@ -8,13 +8,12 @@ using namespace std;
 
 class Proteins : public Nutrients {
 public:
-    explicit Proteins(double value);
+    explicit Proteins(double amountInGrams);
     double getAmount() const override;
-    // map<string, double> calculateNutritionalValue() override;
     double calculateCalories() override;
 
 private:
-    double value;
+    double amountInGrams;
 };
 
 #endif

@@ -1,16 +1,11 @@
 #include "Fats.h"
 
-Fats::Fats(double value) : value(value) {}
+Fats::Fats(double value) : amountInGrams(amountInGrams) {}
 
 double Fats::getAmount() const {
-    return value;
+    return amountInGrams;
 }
 
-// map<string, double> Fats::calculateNutritionalValue() {
-//     double caloriesInFats = value * 9;
-//     return {{"FatsInGrams", value}, {"CaloriesInFats", caloriesInFats}};
-// }
-
 double Fats::calculateCalories() {
-    return value * 9;
+    return amountInGrams * 9;
 }
