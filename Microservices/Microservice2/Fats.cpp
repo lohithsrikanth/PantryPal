@@ -1,6 +1,6 @@
 #include "Fats.h"
 
-Fats::Fats(double value) : amountInGrams(amountInGrams) {}
+Fats::Fats(double amountInGrams) : amountInGrams(amountInGrams) {}
 
 string Fats::getName() const {
     return "Fats";

@@ -1,6 +1,6 @@
 #include "Proteins.h"
 
-Proteins::Proteins(double value) : amountInGrams(amountInGrams) {}
+Proteins::Proteins(double amountInGrams) : amountInGrams(amountInGrams) {}
 
 string Proteins::getName() const {
     return "Proteins";
