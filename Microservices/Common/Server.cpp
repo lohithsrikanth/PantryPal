@@ -8,7 +8,7 @@ using namespace std;
 Server::Server() : app_{}, recipeService_{} {}
 
 void Server::start() {
-    CROW_ROUTE(app_, "/recipes").methods("POST"_method)([&](const crow::request& req) {
+    CROW_ROUTE(app_, "/recipes").methods("GET"_method)([&](const crow::request& req) {
         // Parse request body to get the list of ingredients
         json requestJson = json::parse(req.body);
         vector<string> ingredients = requestJson["ingredients"].get<vector<string>>();
