@@ -57,6 +57,7 @@ json NutritionalInfo::getNutritionalInfo(int id) {
     delete fats;
     delete proteins;
     delete carbs;
+    nutrients.clear();
     
     // Return my JSON response
     return myResponse;
@@ -78,4 +79,5 @@ NutritionalInfo::~NutritionalInfo() {
     for (auto nutrient : nutrients) {
         delete nutrient;
     }
+    nutrients.clear();
 }
