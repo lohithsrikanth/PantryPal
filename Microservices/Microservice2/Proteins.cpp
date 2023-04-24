@@ -2,6 +2,10 @@
 
 Proteins::Proteins(double value) : amountInGrams(amountInGrams) {}
 
+string Proteins::getName() const {
+    return "Proteins";
+}
+
 double Proteins::getAmount() const {
     return amountInGrams;
 }

@@ -2,6 +2,10 @@
 
 Carbohydrates::Carbohydrates(double amountInGrams) : amountInGrams(amountInGrams) {}
 
+string Carbohydrates::getName() const {
+    return "Carbohydrates";
+}
+
 double Carbohydrates::getAmount() const {
     return amountInGrams;
 }

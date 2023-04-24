@@ -2,6 +2,10 @@
 
 Fats::Fats(double value) : amountInGrams(amountInGrams) {}
 
+string Fats::getName() const {
+    return "Fats";
+}
+
 double Fats::getAmount() const {
     return amountInGrams;
 }
