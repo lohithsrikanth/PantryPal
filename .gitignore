@@ -5,5 +5,3 @@ Microservices/Microservice1/test*
 Microservices/Microservice1/*.json
 
 Microservices/Microservice2/test*
-Microservices/gumbo-test
-Microservices/scraper
