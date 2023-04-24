@@ -1,5 +1,4 @@
 #include "NutritionalInfo.h"
-#include "../Common/Request.h"
 
 using json = nlohmann::json;
 
@@ -7,15 +6,27 @@ using namespace std;
 
 void NutritionalInfo::addNutrient(Nutrients* nutrient) {
     nutrients.push_back(nutrient);
-    //nutrients.push_back(nutrient);
 }
 
-// json NutritionalInfo::getNutritionalInfo(int id) {
-//     Request request;
-//     string url = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/" + to_string(id) + "/nutritionWidget.json?";
-//     json responseJson = request.makeRequest(url);
-//     return responseJson;
-// }
+json NutritionalInfo::getNutritionalInfo(int id) {
+    string url = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/" + to_string(id) + "/nutritionWidget.json?";
+    json responseJson = makeRequest(url);
+    json myResponse;    
+    return responseJson;
+}
+
+int NutritionalInfo::extractAmount(string value) {
+    string numStr;
+    for (const auto& c : value) {
+        if (isdigit(c)) {
+            numStr += c;
+        } else {
+            break;
+        }
+    } 
+
+    return stoi(numStr);
+}
 
 double NutritionalInfo::calculateTotalNutritionalValue() const {
     double totalCalories;
