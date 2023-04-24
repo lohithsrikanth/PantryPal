@@ -1,7 +1,4 @@
 #include "NutritionalInfo.h"
-#include "Fats.h"
-#include "Proteins.h"
-#include "Carbohydrates.h"
 
 using json = nlohmann::json;
 
@@ -60,7 +57,7 @@ json NutritionalInfo::getNutritionalInfo(int id) {
     delete fats;
     delete proteins;
     delete carbs;
-
+    
     // Return my JSON response
     return myResponse;
 }
@@ -75,4 +72,10 @@ double NutritionalInfo::calculateTotalNutritionalValue() const {
 
 vector<Nutrients*> NutritionalInfo::getNutrients() {
     return nutrients;
+}
+
+NutritionalInfo::~NutritionalInfo() {
+    for (auto nutrient : nutrients) {
+        delete nutrient;
+    }
 }
